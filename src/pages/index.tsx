@@ -2,8 +2,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import socket from "./api/socket";
 import { useEffect, useState } from "react";
+import io from "socket.io-client";
+
+const socket = io("http://localhost:4444");
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +13,8 @@ export default function Home() {
   const [msg, setMsg] = useState("");
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Connected to Socket.IO server!");
+      console.log(`Connected to Socket.IO server ${socket.id}!`);
+      console.log(socket);
 
       setMsg("Connected to Socket.IO server!");
     });
